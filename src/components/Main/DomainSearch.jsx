@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import Cart from "../Main/Cart"; 
+import "../Main/Main.css"
 
 const DomainSearch = () => {
   const [domainInput, setDomainInput] = useState("");
   const [results, setResults] = useState([]);
+  const [cartWindow, setCartWindow] = useState(false);
   const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
 
@@ -27,7 +30,6 @@ const DomainSearch = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setResults(data);
       } else {
         setError("Er is iets mis gegaan met de aanvraag.");
@@ -43,20 +45,16 @@ const DomainSearch = () => {
   const addToCart = (domain) => {
     if (domain.status === "free") {
       setCart((prevCart) => [...prevCart, domain]);
+      setCartWindow(true); // Maak de winkelwagen zichtbaar
     } else {
       alert(`${domain.domain} is niet beschikbaar!`);
     }
-  };
-
-  const removeFromCart = (index) => {
-    setCart(cart.filter((_, i) => i !== index));
   };
 
   const calculateTotal = () => {
     let subtotal = cart.reduce((total, domain) => total + domain.price.product.price, 0);
     
     if (isNaN(subtotal)) {
-      console.error("Subtotal is geen geldig getal:", subtotal);
       subtotal = 0;
     } else {
       subtotal = parseFloat(subtotal).toFixed(2); 
@@ -71,16 +69,16 @@ const DomainSearch = () => {
     };
   };
 
-  const { subtotal, tax, total } = calculateTotal();
-
   const placeOrder = async () => {
+    const { subtotal, tax, total } = calculateTotal();
+  
     const orderData = {
       domains: cart,
       subtotal: subtotal,
       tax: tax,
       total: total,
     };
-
+  
     try {
       const response = await fetch('http://localhost:1122/api/orders', {
         method: 'POST',
@@ -89,17 +87,16 @@ const DomainSearch = () => {
         },
         body: JSON.stringify(orderData),
       });
-
+  
       if (response.ok) {
-        const data = await response.json();
         alert("Bestelling succesvol geplaatst!");
-        setCart([]);
+        setCart([]);  
+        setCartWindow(false); 
       } else {
         alert("Er is een probleem met het plaatsen van je bestelling.");
       }
     } catch (error) {
       alert("Er is een fout opgetreden bij het plaatsen van je bestelling.");
-      console.error("Fout bij het plaatsen van de bestelling:", error);
     }
   };
 
@@ -131,30 +128,12 @@ const DomainSearch = () => {
         </ul>
       </div>
 
-      <div>
-        <h3>Winkelmand:</h3>
-        <ul>
-          {cart.map((domain, index) => (
-            <li key={index}>
-              {domain.domain} - €
-              {domain.price.product
-                ? domain.price.product.price
-                : "Prijs niet beschikbaar"}
-              <button onClick={() => removeFromCart(index)}>Verwijder</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h3>Checkout:</h3>
-        <p>Subtotaal: €{subtotal}</p>
-        <p>BTW (21%): €{tax}</p>
-        <p>Totaal: €{total}</p>
-        <button onClick={placeOrder} disabled={cart.length === 0}>
-          Bestellen
-        </button>
-      </div>
+      <Cart 
+        cart={cart} 
+        calculateTotal={calculateTotal} 
+        placeOrder={placeOrder} 
+        isVisible={cartWindow} 
+      />
     </div>
   );
 };

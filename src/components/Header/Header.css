@@ -1,0 +1,52 @@
+header {
+  & nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--domijn-white);
+    padding: 1rem .5rem;
+
+    & div {
+
+      margin-right: auto;
+
+    & a {
+        margin: 0;
+        font-size: 3rem;
+        color: var(--domijn-black);
+        font-weight: 200;
+    }
+
+    & p {
+      margin: 0;
+    }
+
+    }
+
+    & ul {
+      display: flex;
+      gap: 3rem;
+
+      & li {
+        list-style-type: none;
+      }
+    }
+
+
+    & button {
+      margin-left: auto;
+      background-color: transparent;
+      border: none;
+
+      & i {
+        color: white;
+        font-size: 2rem;
+      }
+    }
+
+  }
+}
+
+a {
+  text-decoration: none;
+}

@@ -1,12 +1,14 @@
 import React from 'react';
-import DomainSearch from './components/Main/DomainSearch';
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import "./App.css"
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>Welkom bij de Domein Zoeker</h1>
-      <DomainSearch />
-    </div>
+    <>
+      <Header />
+      <Main />
+    </>
   );
 }
 
