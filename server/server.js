@@ -1,9 +1,9 @@
+require('dotenv').config(); 
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-require('dotenv').config(); 
-const PORT = 1212;
+const PORT = process.env.PORT;
 
 const MINTY_BASE_URL = process.env.MINTY_BASE_URL; 
 const MINTY_AUTH = process.env.MINTY_AUTH; 

@@ -15,12 +15,12 @@ const DomainSearch = () => {
         { name: domainInput, extension: "dev" },
       ];
 
-      const response = await fetch('http://localhost:1212/api/domains/search', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Basic ${process.env.REACT_APP_API_KEY}`,
-        },
+      const response = await fetch('http://localhost:1122/api/domains/search', { 
+        method: 'POST', 
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${process.env.REACT_APP_API_KEY}`,
+        }, 
         body: JSON.stringify(requestBody)
       });
 
