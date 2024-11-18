@@ -7,6 +7,7 @@ const Header = () => {
       <header>
         <nav>
           <div className="logo">
+            
             <a href="/"><i className="fa-solid fa-globe"></i> Do<b>Mijn</b></a>
             <p>Jouw domein, jouw terrein</p>
           </div>

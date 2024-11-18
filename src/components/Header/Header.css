@@ -1,10 +1,13 @@
 header {
+
   & nav {
     width: 100%;
     display: flex;
     align-items: center;
     background-color: var(--domijn-white);
-    padding: 1rem .5rem;
+    padding: 1rem 2rem;
+    position: fixed;
+    box-shadow: 0 0 10px #ccc;
 
     & div {
 
@@ -15,10 +18,17 @@ header {
         font-size: 3rem;
         color: var(--domijn-black);
         font-weight: 200;
+
+
+        & img {
+          width: 10%;
+          filter:grayscale(1);
+        }
     }
 
     & p {
       margin: 0;
+      font-style: italic;
     }
 
     }
@@ -29,6 +39,25 @@ header {
 
       & li {
         list-style-type: none;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute; 
+          bottom: -.2rem;
+          width: 0%;
+          left: 0rem;
+          height: 2px;
+          border-radius: 1rem;
+          background-color: var(--domijn-black);
+          transition: .2s;
+        }
+
+        &:hover {
+          &::before {
+            width: 100%;
+          }
+        }
       }
     }
 
@@ -39,7 +68,7 @@ header {
       border: none;
 
       & i {
-        color: white;
+        color: var(--domijn-black);
         font-size: 2rem;
       }
     }

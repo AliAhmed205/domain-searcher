@@ -102,19 +102,21 @@ const DomainSearch = () => {
 
   return (
     <div>
-      <h2>Domein Zoeken</h2>
+      <section className="search-container">
+          <h1>Tijd om jezelf op de online kaart te zetten.</h1>
+        <div>
       <input
         type="text"
-        placeholder="Voer een domeinnaam in"
+        placeholder="Claim jouw domein naam"
         value={domainInput}
         onChange={(e) => setDomainInput(e.target.value)}
       />
-      <button onClick={searchDomains}>Zoek</button>
+      <button onClick={searchDomains}> <i className="fa-solid fa-magnifying-glass"></i> </button>
+      </div>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
-
+      </section>
       <div>
-        <h3>Resultaten:</h3>
         <ul>
           {results.map((domain, index) => (
             <li key={index}>
