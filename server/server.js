@@ -1,3 +1,9 @@
+// Vorig semester werkte ik een back-end project,
+// en heb ik gewerkt met express, dotenv en mongodb.
+// Ik heb voor deze opdracht voor het eerst met axios, cors en Body-parser gewerkt
+// Het suggestions gedeelte heb ik met de assistentie van AI ontwikkelt
+
+
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
