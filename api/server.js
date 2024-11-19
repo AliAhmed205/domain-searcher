@@ -1,9 +1,4 @@
-// Vorig semester werkte ik een back-end project,
-// en heb ik gewerkt met express, dotenv en mongodb.
-// Ik heb voor deze opdracht voor het eerst met axios, cors en Body-parser gewerkt
-// Het suggestions gedeelte heb ik met de assistentie van AI ontwikkelt
-
-// api/server.js
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,20 +6,20 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const Domain = require('../api/models/Domain');
 const Order = require('../api/models/Order');
+const PORT = process.env.PORT;
 
-require('dotenv').config();
+const MINTY_BASE_URL = process.env.MINTY_BASE_URL;
+const MINTY_AUTH = process.env.MINTY_AUTH;
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-// Verbinding met MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Endpoints
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is running' });
 });
@@ -32,11 +27,11 @@ app.get('/api/test', (req, res) => {
 app.post('/api/domains/search', async (req, res) => {
   try {
     const response = await axios.post(
-        `${process.env.MINTY_BASE_URL}/domains/search?with_price=true`,
+        `${MINTY_BASE_URL}/domains/search?with_price=true`,
         req.body,
         {
             headers: {
-                Authorization: process.env.MINTY_AUTH,
+                Authorization: MINTY_AUTH,
                 'Content-Type': 'application/json',
             },
         }
@@ -74,14 +69,15 @@ app.post('/api/domains/suggestions', async (req, res) => {
     const extensions = ['com', 'nl', 'net', 'eu', 'dev'];
     const suggestions = extensions.map(ext => ({
       domain: `${query}.${ext}`,
-      status: "onbekend",
-      price: { product: { price: null } },
+      status: "onbekend", 
+      price: { product: { price: null } }, 
     }));
     res.json(suggestions);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch suggestions', details: error.message });
   }
 });
+
 
 app.post('/api/orders', async (req, res) => {
   try {
@@ -101,6 +97,10 @@ app.post('/api/orders', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error placing the order', details: error.message });
   }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;
