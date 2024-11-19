@@ -6,6 +6,7 @@ header {
     align-items: center;
     background-color: var(--domijn-white);
     padding: 1rem 2rem;
+    z-index: 100;
     position: fixed;
     box-shadow: 0 0 10px #ccc;
 

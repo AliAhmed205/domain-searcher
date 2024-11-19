@@ -20,8 +20,7 @@ const orderSchema = new mongoose.Schema({
   subtotal: Number,
   tax: Number,
   total: Number,
-  date: { type: Date, default: Date.now },
-  userId: { type: String, required: false }, 
+  date: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Order", orderSchema);

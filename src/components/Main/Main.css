@@ -1,6 +1,8 @@
 main {
-  padding: 8em 2em 0;
+  height: 100vh;
+  overflow: hidden;
 }
+
 
 .cart-container {
   position: absolute;
@@ -10,7 +12,7 @@ main {
   padding: 20px;
   width: fit-content;
   margin: 20px;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .cart-container.hidden {
@@ -20,51 +22,76 @@ main {
 }
 
 .search-container {
-  width: calc(100vw - 2em);
-  height: 50vh;
+  position: relative;
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 2rem;
+}
 
-  & h1 {
-    /* margin-inline: auto; */
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 1px solid;
-    animation: typing 3s steps(45) forwards,
-    blink 1s infinite; 
-  }
+.search-container h1 {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid;
+  animation: typing 3s steps(45) forwards, blink 1s infinite;
+}
 
-  & div {
+.search-container div {
+  position: relative;
+  display: flex;
+  width: 55vw; 
+  border: solid 0.3rem black;
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+}
 
-    border: solid .3rem black;
-    border-radius: .5rem;
-    padding: .4rem;
+.search-container div input {
+  width: 100%; 
+  padding: 1rem 1rem;
+  font-size: 1.3rem;
+  border: none;
+}
 
-    & input {
-      width: 55vw;
-      padding: 1rem 1rem;
-      font-size: 1.3rem;
-      border: none;
+.search-container div input:focus {
+  outline: none;
+}
 
-      &:focus {
-        outline: none;
-      }
-    }
+.search-container div button {
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: none;
+  background-color: var(--domijn-black);
+}
 
-    & button {
-      font-size: 1.2rem;
-      border-radius: .5rem;
-      padding: 1rem;
-      border: none;
-      background-color: var(--domijn-black);
-      & i {
-        color: var(--domijn-white);
-      }
-    }
-  }
+.search-container div button i {
+  color: var(--domijn-white);
+}
+
+.suggestions-list {
+  position: absolute;
+  top: calc(100% + 8px); /* Direct onder de input */
+  left: 0;
+  width: 100%; /* Matcht de breedte van de parent div */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  background: #fff;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover {
+  background: #f0f0f0;
 }
 
 @keyframes typing {
@@ -80,5 +107,4 @@ main {
   50% {
     border-color: transparent;
   }
-
 }

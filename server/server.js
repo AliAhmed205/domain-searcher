@@ -16,7 +16,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// Verbinden met MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -59,6 +58,26 @@ app.post('/api/domains/search', async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch domain data', details: error.message });
   }
 });
+
+app.post('/api/domains/suggestions', async (req, res) => {
+  const { query } = req.body;
+  if (!query) {
+    return res.json([]);
+  }
+
+  try {
+    const extensions = ['com', 'nl', 'net', 'eu', 'dev'];
+    const suggestions = extensions.map(ext => ({
+      domain: `${query}.${ext}`,
+      status: "onbekend", 
+      price: { product: { price: null } }, 
+    }));
+    res.json(suggestions);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch suggestions', details: error.message });
+  }
+});
+
 
 app.post('/api/orders', async (req, res) => {
   try {
