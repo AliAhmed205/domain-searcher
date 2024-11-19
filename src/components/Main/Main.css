@@ -5,20 +5,98 @@ main {
 
 
 .cart-container {
-  position: absolute;
-  right: 0;
-  bottom: 0;
   border: 1px solid #ccc;
-  padding: 20px;
+  padding: 1rem;
   width: fit-content;
   margin: 20px;
   transition: 0.5s;
+  background-color: var(--domijn-white);
+  width: 25vw;
+  text-align: center;
 }
 
-.cart-container.hidden {
-  position: absolute;
-  bottom: -20rem;
-  right: 0;
+.cart-container h3 {
+  width: fit-content;
+}
+
+.cart-container ul {
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: var(--domijn-white);
+  border: solid #ccc 1px;
+}
+
+.cart-container ul li {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.cart-container ul li p:first-of-type {
+  margin-right: auto;
+  font-weight: 800;
+
+}
+
+.cart-container > p span {
+  margin-left: auto;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.padding {
+  padding: 1rem;
+  background-color: var(--domijn-black);
+  color: var(--domijn-white);
+}
+
+.cart-container > div:nth-of-type(2) p:nth-of-type(2) {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.cart-container > button {
+  margin: .5rem 0;
+  display: block;
+  width: 100%;
+  padding: .5rem;
+  background-color: black;
+  color: var(--domijn-white);
+  font-size: 1.2rem;
+}
+
+.empty {
+  padding: .5rem;
+  margin: 1rem 0;
+  width: 100%;
+  border: solid #ccc 1px;
+}
+
+.cart-container ul li button {
+  margin-left: 1rem;
+  border: none;
+  background-color: transparent;
+  transition: .5s;
+}
+
+.cart-container ul li button:hover {
+  color: red;
+}
+
+
+.cart-container ul li button i {
+  font-size: 1.2rem;
+}
+
+.cart-container span {
+  background-color: var(--domijn-black);
+  color: var(--domijn-white);
+  padding: .3rem;
+  border-radius: .5rem;
 }
 
 .search-container {
@@ -73,9 +151,9 @@ main {
 
 .suggestions-list {
   position: absolute;
-  top: calc(100% + 8px); /* Direct onder de input */
+  top: calc(100% + 8px); 
   left: 0;
-  width: 100%; /* Matcht de breedte van de parent div */
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -92,6 +170,57 @@ main {
 
 .suggestions-list li:hover {
   background: #f0f0f0;
+}
+
+.results-container {
+  width: fit-content;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.results-container ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.results-container ul li {
+  list-style-type: none;
+}
+
+.results-container ul li button {
+  padding: 1rem;
+  width: 40rem;
+  align-items: center;
+  background-color: var(--domijn-white);
+  border: #ccc .5px solid;
+  display: flex;
+  transition: .2s;
+}
+
+.results-container ul li button:hover {
+  background-color: rgb(233, 233, 255);
+}
+
+.results-container ul li button p:first-of-type {
+  margin-right: auto;
+}
+
+.results-container ul li button span {
+  background-color: var(--domijn-black);
+  margin-left: .5rem;
+  border-radius: .5rem;
+  padding: .5rem;
+  color: white;
+}
+
+.result-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes typing {

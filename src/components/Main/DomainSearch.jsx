@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Cart from "../Main/Cart";
 import "../Main/Main.css";
 import { useNavigate } from "react-router-dom";
-
-
 
 const debounce = (func, delay) => {
   let timeout;
@@ -14,15 +11,10 @@ const debounce = (func, delay) => {
 };
 
 const DomainSearch = () => {
-
   const navigate = useNavigate();
-
-
 
   const [domainInput, setDomainInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [cartWindow, setCartWindow] = useState(false);
-  const [cart, setCart] = useState([]);
 
   const searchDomains = () => {
     if (!domainInput.trim()) {
@@ -61,68 +53,8 @@ const DomainSearch = () => {
     }
   };
 
+  // Zonder de debounce zouden er overbodige verzoeken en verhoogde belasting naar de server gestuurd worden.
   const debouncedFetchSuggestions = debounce(fetchSuggestions, 300);
-
-  const addToCart = (domain) => {
-    if (domain.status === "free") {
-      setCart((prevCart) => [...prevCart, domain]);
-      setCartWindow(true); // Show cart
-    } else {
-      alert(`${domain.domain} is niet beschikbaar!`);
-    }
-  };
-
-  const calculateTotal = () => {
-    let subtotal = cart.reduce(
-      (total, domain) => total + domain.price.product.price,
-      0
-    );
-
-    if (isNaN(subtotal)) {
-      subtotal = 0;
-    } else {
-      subtotal = parseFloat(subtotal).toFixed(2);
-    }
-
-    const tax = (subtotal * 0.21).toFixed(2);
-
-    return {
-      subtotal: parseFloat(subtotal),
-      tax: parseFloat(tax),
-      total: (parseFloat(subtotal) + parseFloat(tax)).toFixed(2),
-    };
-  };
-
-  const placeOrder = async () => {
-    const { subtotal, tax, total } = calculateTotal();
-
-    const orderData = {
-      domains: cart,
-      subtotal: subtotal,
-      tax: tax,
-      total: total,
-    };
-
-    try {
-      const response = await fetch("http://localhost:1122/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
-
-      if (response.ok) {
-        alert("Bestelling succesvol geplaatst!");
-        setCart([]);
-        setCartWindow(false);
-      } else {
-        alert("Er is een probleem met het plaatsen van je bestelling.");
-      }
-    } catch (error) {
-      alert("Er is een fout opgetreden bij het plaatsen van je bestelling.");
-    }
-  };
 
   return (
     <div>
@@ -145,27 +77,12 @@ const DomainSearch = () => {
           {suggestions.length > 0 && (
             <ul className="suggestions-list">
               {suggestions.map((suggestion, index) => (
-            <li 
-            key={index} 
-            onClick={() => {
-              setDomainInput(suggestion.domain);
-              setSuggestions([]); 
-            }}
-          >
-            {suggestion.domain}
-          </li>
+                <li key={index}>{suggestion.domain}</li>
               ))}
             </ul>
           )}
         </div>
       </section>
-
-      <Cart
-        cart={cart}
-        calculateTotal={calculateTotal}
-        placeOrder={placeOrder}
-        isVisible={cartWindow}
-      />
     </div>
   );
 };
