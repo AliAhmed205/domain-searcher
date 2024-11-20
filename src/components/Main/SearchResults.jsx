@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Main/Main.css";
-import { useLocation, useNavigate } from "react-router-dom";  
+import { useLocation, useNavigate } from "react-router-dom";
 import Cart from "./Cart";
 
 const SearchResults = () => {
@@ -9,9 +9,13 @@ const SearchResults = () => {
   const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
   const [cartWindow, setCartWindow] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const searchQuery = new URLSearchParams(location.search).get("q");
+
+  const handleRemoveFromCart = (domainToRemove) => {
+    setCart(cart.filter((domain) => domain.domain !== domainToRemove.domain));
+  };
 
   const calculateTotal = () => {
     let subtotal = cart.reduce(
@@ -55,23 +59,23 @@ const SearchResults = () => {
 
       if (response.ok) {
         alert("Bestelling succesvol geplaatst!");
-        setCart([]); 
+        setCart([]);
         setCartWindow(false);
-        return true; 
+        return true;
       } else {
         alert("Er is een probleem met het plaatsen van je bestelling.");
         return false;
       }
     } catch (error) {
       alert("Er is een fout opgetreden bij het plaatsen van je bestelling.");
-      return false; 
+      return false;
     }
   };
 
   const handlePlaceOrder = async () => {
     const success = await placeOrder();
     if (success) {
-      navigate("/"); 
+      navigate("/");
     }
   };
 
@@ -134,8 +138,9 @@ const SearchResults = () => {
       <Cart
         cart={cart}
         calculateTotal={calculateTotal}
-        placeOrder={handlePlaceOrder} 
+        placeOrder={handlePlaceOrder}
         isVisible={cartWindow}
+        handleRemoveFromCart={handleRemoveFromCart} 
       />
     </section>
   );

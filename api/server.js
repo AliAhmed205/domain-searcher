@@ -15,7 +15,7 @@ const MINTY_AUTH = process.env.MINTY_AUTH;
 const app = express();
 
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' ? 'https://your-frontend-domain.vercel.app' : 'http://localhost:3000',
+  origin: true,  // Hiermee wordt de request origin dynamisch gecontroleerd en toegestaan
   methods: 'GET,POST',
   credentials: true,
 };
