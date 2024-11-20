@@ -6,15 +6,22 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const Domain = require('../api/models/Domain');
 const Order = require('../api/models/Order');
-const PORT = process.env.PORT;
+
+const PORT = process.env.PORT || 1122;
 
 const MINTY_BASE_URL = process.env.MINTY_BASE_URL;
 const MINTY_AUTH = process.env.MINTY_AUTH;
 
 const app = express();
 
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' ? 'https://your-frontend-domain.vercel.app' : 'http://localhost:3000',
+  methods: 'GET,POST',
+  credentials: true,
+};
+
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
@@ -77,7 +84,6 @@ app.post('/api/domains/suggestions', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch suggestions', details: error.message });
   }
 });
-
 
 app.post('/api/orders', async (req, res) => {
   try {
