@@ -23,8 +23,6 @@ git clone <repository-url>
 cd domain-searcher
 ```
 
-### 3. Configuratie
-
 # ```BACK-END CONFIGURATIE```
 
 Navigeer naar de api map:
@@ -84,3 +82,8 @@ De frontend draait nu op http://localhost:3000.
 
 Let op: Zorg ervoor dat de backend draait op ``http://localhost:1122``, omdat de frontend hardcoded verzoeken naar die URL stuurt.
 Als alles zorgvuldig is nagelopen en uitgevoerd, zou de website zoals in de video moeten werken:
+
+<video width="100%" controls>
+  <source src="./public/assets/demo.mov" type="video/mp4">
+</video>
+
